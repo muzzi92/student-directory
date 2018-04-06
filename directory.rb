@@ -24,7 +24,7 @@ end
 # Method to print list of students
 def print(students)
   students.each do |student|
-    if student[:name].chr.downcase == "m"
+    if student[:name].chr.downcase == "m" && student[:name].length < 12
       puts "#{students.index(student) + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
     end
   end
