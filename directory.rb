@@ -1,3 +1,4 @@
+# User input method to creat student list
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -15,15 +16,20 @@ def input_students
   end
   students
 end
+# Method to print header text
 def print_header
   puts "The students of Villains Academy"
   puts "--------------"
 end
+# Method to print list of students
 def print(students)
   students.each do |student|
-    puts "#{students.index(student) + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name].chr.downcase == "m"
+      puts "#{students.index(student) + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
+# Method to print footer text inc. student count
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
