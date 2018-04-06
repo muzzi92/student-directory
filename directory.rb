@@ -23,10 +23,12 @@ def print_header
 end
 # Method to print list of students
 def print(students)
-  students.each do |student|
-    if student[:name].chr.downcase == "m" && student[:name].length < 12
-      puts "#{students.index(student) + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+  i = 0
+  while i < students.length do
+    if students[i][:name].chr.downcase == "m" && students[i][:name].length < 12
+      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
     end
+    i +=1
   end
 end
 # Method to print footer text inc. student count
