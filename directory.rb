@@ -1,4 +1,4 @@
-# User input method to create student list
+# Method for inputting student information
 def input_students
   students = []
   while true do
@@ -15,16 +15,35 @@ def input_students
   end
   students
 end
+# Method to sort students into hash by cohorts
+def sort_by_cohort(students)
+  sorted_by_cohort = {}
+  students.each do |student|
+    cohort = student[:cohort]
+    if sorted_by_cohort[cohort] == nil
+      sorted_by_cohort[cohort] = []
+    end
+    sorted_by_cohort[cohort].push(student[:name])
+  end
+  sorted_by_cohort
+end
+# Method for printing users by desired cohort
+def print_cohort_hash(hash)
+  puts "What cohort of students would you like to view? "
+  cohort = gets.chomp
+  puts cohort + ":"
+  puts hash[cohort]
+end
 # Method to print header text
 def print_header
   puts "The students of Villains Academy".center(50)
   puts "--------------".center(50)
 end
-# Method to print list of students
+# Method to print student information
 def print(students)
   i = 0
   while i < students.length do
-    if students[i][:name].chr.downcase == "m" && students[i][:name].length < 12
+    if students[i][:name].to_s.chr.downcase == "m" && students[i][:name].length < 12
       puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort) likes #{students[i][:hobbies]}.".center(50)
     end
     i +=1
@@ -37,5 +56,5 @@ end
 # Call methods
 students = input_students
 print_header
-print(students)
+print_cohort_hash(sort_by_cohort(students))
 print_footer(students)
