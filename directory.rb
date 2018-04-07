@@ -1,18 +1,17 @@
-# User input method to creat student list
+# User input method to create student list
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-  # Create an empty array
   students = []
-  # Get first name
-  name = gets.chomp
-  # While name is not empty, repeat this code
-  while !name.empty? do
-    # Add the student hash to the array
-    students.push << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
-    # Get nother name from user
+  while true do
+    puts "Please enter a student name: "
     name = gets.chomp
+    puts "Please enter cohort month for this student: "
+    cohort = gets.chomp
+    puts "Please enter a hobbie for this student: "
+    hobbie = gets.chomp
+    students << {name: name, cohort: cohort, hobbies: hobbie}
+    puts "Add another student, yes or no?"
+    input = gets.chomp
+    break if input == "no"
   end
   students
 end
@@ -26,7 +25,7 @@ def print(students)
   i = 0
   while i < students.length do
     if students[i][:name].chr.downcase == "m" && students[i][:name].length < 12
-      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort)"
+      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort) likes #{students[i][:hobbies]}."
     end
     i +=1
   end
