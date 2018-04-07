@@ -17,22 +17,22 @@ def input_students
 end
 # Method to print header text
 def print_header
-  puts "The students of Villains Academy"
-  puts "--------------"
+  puts "The students of Villains Academy".center(50)
+  puts "--------------".center(50)
 end
 # Method to print list of students
 def print(students)
   i = 0
   while i < students.length do
     if students[i][:name].chr.downcase == "m" && students[i][:name].length < 12
-      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort) likes #{students[i][:hobbies]}."
+      puts "#{i + 1}. #{students[i][:name]} (#{students[i][:cohort]} cohort) likes #{students[i][:hobbies]}.".center(50)
     end
     i +=1
   end
 end
 # Method to print footer text inc. student count
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students".center(50)
 end
 # Call methods
 students = input_students
