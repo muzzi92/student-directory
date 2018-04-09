@@ -1,45 +1,5 @@
 @students = []
 
-# Method for inputting student information
-def input_students
-  puts "Please enter student names to add them."
-  puts "Press enter twice to exit to the main menu."
-  name = gets.chomp
-  while !name.empty? do
-    @students << {name: name, cohort: "April"}
-    puts "Students added so far: #{@students.count}"
-    name = gets.chomp
-  end
-end
-
-# Method to print header text
-def print_header
-  puts "The students of Villains Academy".center(50)
-  puts "--------------".center(50)
-end
-
-# Method to print student information
-def print_students_list
-  i = 0
-  while i < @students.length do
-    puts "#{i + 1}. #{@students[i][:name]}: (#{@students[i][:cohort]} cohort)".center(50)
-    i +=1
-  end
-end
-
-# Method to print footer text inc. student count
-def print_footer
-    @students.count > 1 ? plural = "s" : plural = ""
-    puts "In total, we have #{@students.count} great student#{plural}.".center(50)
-end
-
-def interactive_menu
-  loop do
-    print_menu
-    process(gets.chomp)
-  end
-end
-
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
@@ -48,10 +8,11 @@ def print_menu
   puts "9. Exit"
 end
 
-def show_students
-  print_header
-  print_students_list
-  print_footer
+def interactive_menu
+  loop do
+    print_menu
+    process(STDIN.gets.chomp)
+  end
 end
 
 def process(input)
@@ -71,6 +32,41 @@ def process(input)
   end
 end
 
+def input_students
+  puts "Please enter student names to add them."
+  puts "Press enter twice to exit to the main menu."
+  name = STDIN.gets.chomp
+  while !name.empty? do
+    @students << {name: name, cohort: "April"}
+    puts "Students added so far: #{@students.count}"
+    name = STDIN.gets.chomp
+  end
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def print_header
+  puts "The students of Villains Academy".center(50)
+  puts "--------------".center(50)
+end
+
+def print_students_list
+  i = 0
+  while i < @students.length do
+    puts "#{i + 1}. #{@students[i][:name]}: (#{@students[i][:cohort]} cohort)".center(50)
+    i +=1
+  end
+end
+
+def print_footer
+    @students.count > 1 ? plural = "s" : plural = ""
+    puts "In total, we have #{@students.count} great student#{plural}.".center(50)
+end
+
 def save_students
   file = File.open("students.csv", "w")
   @students.each do |student|
@@ -82,7 +78,7 @@ def save_students
 end
 
 def load_students(filename = "students.csv")
-  file = File.open("students.csv", "r")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     @students << {name: name, cohort: cohort}
@@ -90,5 +86,17 @@ def load_students(filename = "students.csv")
   file.close
 end
 
-# Call methods
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+try_load_students
 interactive_menu
