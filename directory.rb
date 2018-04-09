@@ -51,10 +51,11 @@ def print(students)
 end
 # Method to print footer text inc. student count
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(50)
+    students.count > 1 ? plural = "s" : plural = ""
+    puts "Overall, we have #{students.count} great student#{plural}".center(50)
 end
 # Call methods
 students = input_students
 print_header
-print_cohort_hash(sort_by_cohort(students))
+print(students)
 print_footer(students)
