@@ -35,9 +35,9 @@ end
 def input_students
   puts "Please enter student names to add them."
   puts "Press enter twice to exit to the main menu."
-  name = STDIN.gets.chomp
+  name, cohort = STDIN.gets.chomp, "April"
   while !name.empty? do
-    @students << {name: name, cohort: "April"}
+    build_students_array(name, cohort)
     puts "Students added so far: #{@students.count}"
     name = STDIN.gets.chomp
   end
@@ -81,7 +81,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
-    @students << {name: name, cohort: cohort}
+    build_students_array(name, cohort)
   end
   file.close
 end
@@ -96,6 +96,10 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit
   end
+end
+
+def build_students_array(name, cohort)
+  @students << {name: name, cohort: cohort}
 end
 
 try_load_students
