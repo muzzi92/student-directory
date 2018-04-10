@@ -77,23 +77,23 @@ end
 
 def save_students
   puts "Which file would you like to save to?"
-  file = File.open(STDIN.gets.chomp, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(STDIN.gets.chomp, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
 end
 
 def load_students(filename = "students.csv")
   puts "Which file would you like to load from?"
-  file = File.open(STDIN.gets.chomp, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    build_students_array(name, cohort)
+  File.open(STDIN.gets.chomp, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
+      build_students_array(name, cohort)
+    end
   end
-  file.close
 end
 
 def try_load_students(filename = "students.csv")
