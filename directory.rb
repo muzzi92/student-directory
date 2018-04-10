@@ -17,18 +17,12 @@ end
 
 def process(input)
   case input
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      exit
-    else
-      puts "I didn't understand the input, try again."
+    when "1" ; input_students
+    when "2" ; show_students
+    when "3" ; save_students
+    when "4" ; load_students
+    when "9" ; exit
+    else puts "I didn't understand the input, try again."
   end
 end
 
@@ -86,9 +80,7 @@ def load_students(filename = "students.csv")
   file.close
 end
 
-def try_load_students
-  filename = ARGV.first
-  return if filename.nil?
+def try_load_students(filename = "students.csv")
   if File.exists?(filename)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
