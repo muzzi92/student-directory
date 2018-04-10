@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = []
 
 def print_menu
@@ -17,28 +19,16 @@ end
 
 def process(input)
   case input
-    when "1"
-      selection_feedback(input)
-      input_students
-    when "2"
-      selection_feedback(input)
-      show_students
-    when "3"
-      selection_feedback(input)
-      save_students
-    when "4"
-      selection_feedback(input)
-      load_students
-    when "9"
-      selection_feedback(input)
-      exit
+    when "1" ; input_students
+    when "2" ; show_students
+    when "3" ; save_students
+    when "4" ; load_students
+    when "9" ; exit
     else puts "I didn't understand the input, try again."
   end
+  puts "You successfully selected option #{input}"
 end
 
-def selection_feedback(input)
-  puts "You have successfully selected option #{input}"
-end
 
 def input_students
   puts "Please enter student names to add them."
@@ -77,28 +67,21 @@ end
 
 def save_students
   puts "Which file would you like to save to?"
-  File.open(STDIN.gets.chomp, "w") do |file|
-    @students.each { |student| file.puts [student[:name], student[:cohort]].join(",") }
+  CSV.open(STDIN.gets.chomp, "w") do |file|
+    @students.each { |student| file << [student[:name], student[:cohort]] }
   end
 end
 
-def load_students(filename = "students.csv")
+def load_students
   puts "Which file would you like to load from?"
-  File.open(STDIN.gets.chomp, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(",")
-      build_students_array(name, cohort)
-    end
-  end
-end
-
-def try_load_students(filename = "students.csv")
-  if File.exists?(filename)
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
+  filename = STDIN.gets.chomp
+  if !File.exists?(filename)
+    filename = "students.csv"
   else
-    puts "Sorry, #{filename} doesn't exist."
-    exit
+    CSV.foreach(filename) do |row|
+    name, cohort = row
+    build_students_array(name, cohort)
+    end
   end
 end
 
@@ -106,4 +89,5 @@ def build_students_array(name, cohort)
   @students << {name: name, cohort: cohort}
 end
 
+load_students
 interactive_menu
