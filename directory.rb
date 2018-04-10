@@ -78,11 +78,7 @@ end
 def save_students
   puts "Which file would you like to save to?"
   File.open(STDIN.gets.chomp, "w") do |file|
-    @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
-    end
+    @students.each { |student| file.puts [student[:name], student[:cohort]].join(",") }
   end
 end
 
