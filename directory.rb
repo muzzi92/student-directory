@@ -17,13 +17,27 @@ end
 
 def process(input)
   case input
-    when "1" ; input_students
-    when "2" ; show_students
-    when "3" ; save_students
-    when "4" ; load_students
-    when "9" ; exit
+    when "1"
+      selection_feedback(input)
+      input_students
+    when "2"
+      selection_feedback(input)
+      show_students
+    when "3"
+      selection_feedback(input)
+      save_students
+    when "4"
+      selection_feedback(input)
+      load_students
+    when "9"
+      selection_feedback(input)
+      exit
     else puts "I didn't understand the input, try again."
   end
+end
+
+def selection_feedback(input)
+  puts "You have successfully selected option #{input}"
 end
 
 def input_students
@@ -62,7 +76,8 @@ def print_footer
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+  puts "Which file would you like to save to?"
+  file = File.open(STDIN.gets.chomp, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -72,7 +87,8 @@ def save_students
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
+  puts "Which file would you like to load from?"
+  file = File.open(STDIN.gets.chomp, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     build_students_array(name, cohort)
@@ -94,5 +110,4 @@ def build_students_array(name, cohort)
   @students << {name: name, cohort: cohort}
 end
 
-try_load_students
 interactive_menu
